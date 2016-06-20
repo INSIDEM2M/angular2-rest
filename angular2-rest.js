@@ -90,10 +90,14 @@ exports.RESTClient = RESTClient;
  * @param {String} url - base URL
  */
 function BaseUrl(url) {
+    var urlFunction = function () {
+        return url;
+    };
+    if (typeof url === "function") {
+        urlFunction = url;
+    }
     return function (Target) {
-        Target.prototype.getBaseUrl = function () {
-            return url;
-        };
+        Target.prototype.getBaseUrl = urlFunction;
         return Target;
     };
 }
